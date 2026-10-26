@@ -1,0 +1,16 @@
+<div class="rn-star-rating" data-rn-star-rating data-product-id="gid://shopify/Product/{{ product.id }}" data-proxy-prefix="/apps/reviewnest" aria-live="polite" style="--rn-accent: {{ block.settings.accent_color }}">
+  <span data-rn-stars aria-hidden="true"></span>
+  <span data-rn-rating-text>{{ block.settings.empty_text | escape }}</span>
+</div>
+{% schema %}
+{
+  "name": "Review rating",
+  "target": "section",
+  "javascript": "review-widget.js",
+  "stylesheet": "review-widget.css",
+  "settings": [
+    { "type": "color", "id": "accent_color", "label": "Star color", "default": "#176B5B" },
+    { "type": "text", "id": "empty_text", "label": "Empty rating text", "default": "No reviews yet" }
+  ]
+}
+{% endschema %}

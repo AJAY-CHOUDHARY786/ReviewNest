@@ -1,0 +1,30 @@
+<section class="rn-widget" data-rn-widget data-product-id="gid://shopify/Product/{{ product.id }}" data-proxy-prefix="/apps/reviewnest" style="--rn-accent: {{ block.settings.accent_color }}" aria-live="polite">
+  <h2 class="rn-widget__heading">{{ block.settings.heading | escape }}</h2>
+  <div class="rn-widget__summary" data-rn-summary></div>
+  <div class="rn-widget__reviews" data-rn-reviews></div>
+  <button class="rn-widget__more" type="button" data-rn-more hidden>Load more reviews</button>
+  <form class="rn-widget__form" data-rn-form>
+    <h3>Write a review</h3>
+    <label>Name<input name="name" maxlength="120" autocomplete="name" required></label>
+    <label>Email (optional)<input name="email" type="email" maxlength="254" autocomplete="email"></label>
+    <label>Rating<select name="rating" required><option value="">Choose a rating</option><option value="5">5 stars</option><option value="4">4 stars</option><option value="3">3 stars</option><option value="2">2 stars</option><option value="1">1 star</option></select></label>
+    <label>Title<input name="title" maxlength="200"></label>
+    <label>Your review<textarea name="body" maxlength="5000" required></textarea></label>
+    <label class="rn-widget__honeypot" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+    <p>By submitting, you agree that your review may be displayed with your name.</p>
+    <button type="submit">Submit review</button>
+    <p data-rn-message role="status"></p>
+  </form>
+</section>
+{% schema %}
+{
+  "name": "Product reviews",
+  "target": "section",
+  "javascript": "review-widget.js",
+  "stylesheet": "review-widget.css",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Customer reviews" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#176B5B" }
+  ]
+}
+{% endschema %}

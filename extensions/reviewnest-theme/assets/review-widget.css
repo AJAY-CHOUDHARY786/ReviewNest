@@ -1,0 +1,136 @@
+.rn-widget,
+.rn-star-rating {
+  --rn-accent: #176b5b;
+  color: #202223;
+  font-family: inherit;
+}
+
+.rn-widget {
+  max-width: 960px;
+  margin: 24px auto;
+}
+
+.rn-widget__heading {
+  margin: 0 0 12px;
+  font-size: 1.5rem;
+}
+
+.rn-widget__summary,
+.rn-star-rating,
+.rn-review__stars {
+  color: var(--rn-accent);
+  font-weight: 600;
+}
+
+.rn-widget__reviews {
+  display: grid;
+  gap: 12px;
+  margin-block: 16px;
+}
+
+.rn-review {
+  padding: 14px 0;
+  border-top: 1px solid #dfe3e1;
+}
+
+.rn-review h3 {
+  margin: 6px 0;
+  font-size: 1rem;
+}
+
+.rn-review__meta {
+  margin: 4px 0;
+  color: #5f6663;
+  font-size: 0.875rem;
+}
+
+.rn-review__body {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.rn-review__verified {
+  display: inline-block;
+  color: #1d5c3a;
+  font-size: 0.8125rem;
+}
+
+.rn-review img {
+  display: block;
+  max-width: min(100%, 240px);
+  max-height: 240px;
+  margin-top: 8px;
+  object-fit: contain;
+}
+
+.rn-widget__form {
+  display: grid;
+  gap: 10px;
+  max-width: 520px;
+  margin-top: 24px;
+}
+
+.rn-widget__form h3 {
+  margin: 0;
+}
+
+.rn-widget__form label {
+  display: grid;
+  gap: 5px;
+}
+
+.rn-widget__form input,
+.rn-widget__form select,
+.rn-widget__form textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid #8c9196;
+  border-radius: 3px;
+  background: #fff;
+  color: #202223;
+  font: inherit;
+}
+
+.rn-widget__form textarea {
+  min-height: 110px;
+}
+
+.rn-widget__form button,
+.rn-widget__more {
+  width: fit-content;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 3px;
+  background: var(--rn-accent);
+  color: white;
+  font: inherit;
+  cursor: pointer;
+}
+
+.rn-widget__form button:disabled,
+.rn-widget__more:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.rn-widget__honeypot {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rn-widget *,
+  .rn-widget *::before,
+  .rn-widget *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

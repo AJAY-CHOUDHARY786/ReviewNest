@@ -1,0 +1,196 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Note that some adapters may set a maximum length for the String type by default, please ensure your strings are long
+// enough when changing adapters.
+// See https://www.prisma.io/docs/orm/reference/prisma-schema-reference#string for more information
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id            String    @id
+  shop          String
+  state         String
+  isOnline      Boolean   @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String
+  userId        BigInt?
+  firstName     String?
+  lastName      String?
+  email         String?
+  accountOwner  Boolean   @default(false)
+  locale        String?
+  collaborator  Boolean?  @default(false)
+  emailVerified Boolean?  @default(false)
+  refreshToken        String?
+  refreshTokenExpires DateTime?
+}
+
+model Shop {
+  id               String             @id @default(cuid())
+  domain           String             @unique
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  products         ProductRef[]
+  reviews          Review[]
+  importJobs       ImportJob[]
+  reviewRequests   ReviewRequest[]
+  emailEvents      EmailEvent[]
+  widgetConfig     WidgetConfig?
+  subscription     Subscription?
+  moderationEvents ModerationEvent[]
+  privacyExports PrivacyExport[]
+}
+
+model ProductRef {
+  id               String   @id @default(cuid())
+  shopId           String
+  shopifyProductId String
+  handle           String?
+  title            String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  shop             Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  reviews          Review[]
+
+  @@unique([shopId, shopifyProductId])
+  @@index([shopId, handle])
+}
+
+model Review {
+  id                 String   @id @default(cuid())
+  shopId             String
+  productRefId       String?
+  shopifyProductId   String?
+  reviewerName       String
+  reviewerEmail      String?
+  rating             Int
+  title              String?
+  body               String
+  status             String   @default("pending")
+  verified           Boolean  @default(false)
+  verificationSource String   @default("none")
+  source             String   @default("native")
+  sourceReviewId     String?
+  submittedAt        DateTime @default(now())
+  publishedAt        DateTime?
+  updatedAt          DateTime @updatedAt
+  shop               Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  product            ProductRef? @relation(fields: [productRefId], references: [id], onDelete: SetNull)
+  media              ReviewMedia[]
+  moderationEvents   ModerationEvent[]
+
+  @@unique([shopId, source, sourceReviewId])
+  @@index([shopId, status, submittedAt])
+  @@index([shopId, rating])
+  @@index([shopId, shopifyProductId])
+}
+
+model ReviewMedia {
+  id         String   @id @default(cuid())
+  reviewId   String
+  storageKey String
+  url        String?
+  mimeType   String
+  sizeBytes  Int
+  createdAt  DateTime @default(now())
+  review     Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@index([reviewId])
+}
+
+model ImportJob {
+  id        String   @id @default(cuid())
+  shopId    String
+  status    String   @default("queued")
+  source    String   @default("csv_import")
+  totalRows Int      @default(0)
+  processed Int      @default(0)
+  failed    Int      @default(0)
+  errorKey  String?
+  payload   String?
+  errorReport String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  shop      Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@index([shopId, createdAt])
+}
+
+model ReviewRequest {
+  id            String   @id @default(cuid())
+  shopId        String
+  orderId       String
+  customerEmail String
+  status        String   @default("scheduled")
+  dueAt         DateTime
+  sentAt        DateTime?
+  createdAt     DateTime @default(now())
+  shop          Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@unique([shopId, orderId])
+  @@index([shopId, status, dueAt])
+}
+
+model EmailEvent {
+  id              String   @id @default(cuid())
+  shopId          String
+  reviewRequestId String?
+  providerId      String?
+  status          String
+  createdAt       DateTime @default(now())
+  shop            Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@index([shopId, createdAt])
+}
+
+model WidgetConfig {
+  id        String   @id @default(cuid())
+  shopId    String   @unique
+  settings  Json     @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  shop      Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+}
+
+model Subscription {
+  id               String   @id @default(cuid())
+  shopId           String   @unique
+  plan             String   @default("Basic")
+  status           String   @default("inactive")
+  trialEndsAt      DateTime?
+  currentPeriodEnd DateTime?
+  updatedAt        DateTime @updatedAt
+  shop             Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+}
+
+model ModerationEvent {
+  id        String   @id @default(cuid())
+  shopId    String
+  reviewId  String
+  action    String
+  createdAt DateTime @default(now())
+  shop      Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  review    Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@index([shopId, createdAt])
+  @@index([reviewId])
+}
+
+model PrivacyExport {
+  id        String   @id @default(cuid())
+  shopId    String
+  payload   String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  shop      Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@index([shopId, expiresAt])
+}
