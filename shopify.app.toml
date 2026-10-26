@@ -1,15 +1,15 @@
 # This file stores configurations for your Shopify app.
 name = "ReviewNest"
-client_id = ""
-application_url = "https://example.com"
+client_id = "11e784ca3a418a3a68bc1d138971d1e7"
+application_url = "https://review-nest-sigma.vercel.app/"
 embedded = true
 
 [auth]
-redirect_urls = ["https://example.com/auth/callback"]
+redirect_urls = ["https://review-nest-sigma.vercel.app/auth/callback"]
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "read_products,write_products,read_orders,write_app_proxy"
+scopes = "write_theme_code,read_themes,write_themes"
 
 [app_proxy]
 url = "/apps/proxy"
