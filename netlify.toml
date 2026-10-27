@@ -1,0 +1,3 @@
+[build]
+  command = "prisma generate && react-router build"
+  publish = "build/client"
