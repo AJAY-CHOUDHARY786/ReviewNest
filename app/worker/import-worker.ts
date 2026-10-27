@@ -162,6 +162,7 @@ async function main() {
   );
   await boss.start();
   await boss.createQueue(importQueueName);
+  await boss.createQueue("privacy-export-cleanup");
   await boss.work(importQueueName, async (jobs) => {
     for (const job of jobs) {
       const parsed = queuedImportSchema.safeParse(job.data);
