@@ -27,6 +27,7 @@
     "node": ">=22.12"
   },
   "dependencies": {
+    "@netlify/vite-plugin-react-router": "^4.0.0",
     "@prisma/client": "^6.19.0",
     "@react-router/dev": "7.18.2",
     "@react-router/fs-routes": "7.18.2",
@@ -67,11 +68,9 @@
     "vite": "^7.3.1",
     "vitest": "^5.0.5"
   },
-  "workspaces": {
-    "packages": [
-      "extensions/*"
-    ]
-  },
+  "workspaces": [
+    "extensions/*"
+  ],
   "trustedDependencies": [
     "@shopify/plugin-cloudflare"
   ],
