@@ -21,9 +21,10 @@ export default function App() {
   return (
     <div className={styles.index}>
       <div className={styles.content}>
-        <h1 className={styles.heading}>A short heading about [your app]</h1>
+        <h1 className={styles.heading}>ReviewNest</h1>
         <p className={styles.text}>
-          A tagline about [your app] that describes your value proposition.
+          Collect, moderate, and showcase trusted product reviews from your
+          Shopify store.
         </p>
         {showForm && (
           <Form className={styles.form} method="post" action="/auth/login">
@@ -39,16 +40,16 @@ export default function App() {
         )}
         <ul className={styles.list}>
           <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
+            <strong>Review moderation</strong>. Approve, reject, and manage
+            customer feedback without leaving the admin.
           </li>
           <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
+            <strong>CSV imports</strong>. Bulk-import reviews with validation,
+            duplicate checks, and structured row previews.
           </li>
           <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
+            <strong>Widget automation</strong>. Publish reviews, trigger request
+            emails, and keep your storefront content fresh.
           </li>
         </ul>
       </div>
